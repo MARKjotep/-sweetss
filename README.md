@@ -1,1 +1,1 @@
-# A UI library for Yra
+# library for SweetSS
