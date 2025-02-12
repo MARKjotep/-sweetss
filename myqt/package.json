@@ -1,7 +1,7 @@
 {
-  "name": "@sweetss/strap",
+  "name": "@sweetss/flexd",
   "version": "0.0.1",
-  "description": "strappy css",
+  "description": "flexd css",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -30,7 +30,9 @@
     "url": "https://github.com/MARKjotep/-sweetss/issues"
   },
   "homepage": "https://github.com/MARKjotep/-sweetss#readme",
-  "dependencies": {},
+  "dependencies": {
+    "sweetss": "link:sweetss"
+  },
   "devDependencies": {
     "@types/node": "^22.13.1",
     "@types/bun": "latest"
