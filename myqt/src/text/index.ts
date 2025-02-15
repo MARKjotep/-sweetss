@@ -1,6 +1,22 @@
 import { CSS, f, med } from "sweetss";
-import { INCREMENT, EASE } from "../config";
+import { __ } from "../@";
+import Size from "./size";
+import Font from "./font";
+import Decoration from "./decoration";
 
-import { $$ } from "../@";
+export default (c: CSS) => {
+  Size(c);
+  Font(c);
+  Misc(c);
+  Decoration(c);
+};
 
-export default (c: CSS) => {};
+const Misc = (c: CSS) => {
+  c.truncate = [
+    {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+  ];
+};

@@ -1,19 +1,10 @@
-import { fileName, SweetSS, _var, CSS } from "sweetss";
-import Anim from "./animation";
-import Bg from "./background";
-import Colors from "./colors";
-import Column from "./column";
-import Display from "./display";
-import Cursor from "./cursor";
-import Text from "./text";
-import Filter from "./filter";
-import Border from "./border";
-import Dom from "./dom";
-import Vars from "./var";
-import Opacity from "./opacity";
-import Shadow from "./shadow";
-
+import { fileName, SweetSS, CSS } from "sweetss";
 import { $$ } from "./@";
+import Anim from "./ANIMATION";
+// Appearance
+import Appearance from "./APPEARANCE";
+import Animation from "./ANIMATION";
+import Layout from "./LAYOUT";
 
 export class Flexed extends SweetSS {
   constructor({ filename }: { filename: string }) {
@@ -21,30 +12,33 @@ export class Flexed extends SweetSS {
       name: filename.includes("/") ? fileName(filename) : filename,
       webkitKeyframes: false,
     });
-    // Dom(this.dom);
-
-    // Colors(this.cx);
-
-    // Text(this.cx);
-
-    // Border(this.cx);
-    // Column(this.cx);
-    // Display(this.cx);
-    // Cursor(this.cx);
-
-    //
-    // Anim(this.cx, this.kf);
-    // Bg(this.cx);
-    Filter(this.cx);
-    // Opacity(this.cx);
-    // Shadow(this.cx);
-    // Vars(this.cx, this.dom);
+  }
+  get all() {
+    this.animation.appearance;
+    return this;
   }
   colors(...colors: string[]) {}
   root() {}
-  animation() {
-    // custom
+  get layout() {
+    Layout(this.cx);
+    return this;
   }
-  animations() {}
-  background() {}
+  get animation() {
+    Animation(this.cx, this.kf);
+    return this;
+  }
+  get appearance() {
+    Appearance(this.cx);
+
+    return this;
+  }
 }
+
+const BoxSizng = (c: CSS) => {
+  c.box_border = {
+    boxSizing: "border-box",
+  };
+  c.box_content = {
+    boxSizing: "content-box",
+  };
+};

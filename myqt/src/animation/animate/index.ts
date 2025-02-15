@@ -1,24 +1,29 @@
-import { CSS, KFCSS, f } from "sweetss";
-
+import { CSS, KFCSS, f, med } from "sweetss";
 import { $$, oItems, oVals } from "../../@";
 
-export default (c: CSS, kf: KFCSS) => {
-  c[`animation_none`] = [
+export default (c: CSS, kf: KFCSS, t: string, m: string) => {
+  //
+  c[`${t}animation_none`] = [
     {
-      animation: "none",
+      animation: med({ [m]: "none" }),
     },
   ];
-  //
-  Bounce(c, kf);
-  Ping(c, kf);
-  Pulse(c, kf);
-  Spin(c, kf);
+
+  [
+    //
+    Bounce,
+    Ping,
+    Pulse,
+    Spin,
+  ].forEach((an) => {
+    an(c, kf, t, m);
+  });
 };
 
-const Bounce = (c: CSS, kf: KFCSS, name = "bounce") => {
-  c[`animation_${name}`] = [
+const Bounce = (c: CSS, kf: KFCSS, t: string, m: string, name = "bounce") => {
+  c[`${t}animation_${name}`] = [
     {
-      animation: [name, "1s", "infinite"],
+      animation: med({ [m]: [name, "1s", "infinite"] }),
     },
   ];
 
@@ -34,10 +39,12 @@ const Bounce = (c: CSS, kf: KFCSS, name = "bounce") => {
   };
 };
 
-const Ping = (c: CSS, kf: KFCSS, name = "ping") => {
-  c[`animation_${name}`] = [
+const Ping = (c: CSS, kf: KFCSS, t: string, m: string, name = "ping") => {
+  c[`${t}animation_${name}`] = [
     {
-      animation: [name, "1s", f.cubicBezier(0, 0, 0.2, 1), "infinite"],
+      animation: med({
+        [m]: [name, "1s", f.cubicBezier(0, 0, 0.2, 1), "infinite"],
+      }),
     },
   ];
 
@@ -49,10 +56,12 @@ const Ping = (c: CSS, kf: KFCSS, name = "ping") => {
   };
 };
 
-const Pulse = (c: CSS, kf: KFCSS, name = "pulse") => {
-  c[`animation_${name}`] = [
+const Pulse = (c: CSS, kf: KFCSS, t: string, m: string, name = "pulse") => {
+  c[`${t}animation_${name}`] = [
     {
-      animation: [name, "2s", f.cubicBezier(0.4, 0, 0.6, 1), "infinite"],
+      animation: med({
+        [m]: [name, "2s", f.cubicBezier(0.4, 0, 0.6, 1), "infinite"],
+      }),
     },
   ];
 
@@ -63,10 +72,10 @@ const Pulse = (c: CSS, kf: KFCSS, name = "pulse") => {
   };
 };
 
-const Spin = (c: CSS, kf: KFCSS, name = "spin") => {
-  c[`animation_${name}`] = [
+const Spin = (c: CSS, kf: KFCSS, t: string, m: string, name = "spin") => {
+  c[`${t}animation_${name}`] = [
     {
-      animation: [name, "1s", "linear", "infinite"],
+      animation: med({ [m]: [name, "1s", "linear", "infinite"] }),
     },
   ];
 

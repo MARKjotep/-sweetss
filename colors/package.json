@@ -1,7 +1,7 @@
 {
-  "name": "@sweetss/myqt",
+  "name": "@sweetss/colors",
   "version": "0.0.1",
-  "description": "myqt css utility",
+  "description": "sweetss color pairs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/MARKjotep/-sweetss#readme",
   "dependencies": {
-    "sweetss": "link:sweetss"
+    "sweetss": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
@@ -39,5 +39,11 @@
   },
   "peerDependencies": {
     "typescript": "latest"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
