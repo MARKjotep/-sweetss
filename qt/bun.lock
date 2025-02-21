@@ -4,12 +4,12 @@
     "": {
       "name": "@sweetss/colors",
       "dependencies": {
-        "sweetss": "latest",
+        "sweetss": "^2.2.6",
       },
     },
   },
   "packages": {
-    "sweetss": ["sweetss@2.2.6", "", { "peerDependencies": { "typescript": "^5.7.3" } }, "sha512-ZPnkvyIA7Vh0o2b+t0bBUTAtMm9zfffCHBsbHl6JK/QU/9o6pmd9h7y8s2XvysaVBxozNvj2dZrJ9D5elJpwSA=="],
+    "sweetss": ["sweetss@2.3.87", "", { "peerDependencies": { "typescript": "^5.7.3" } }, "sha512-dV0GJeHbLB7U3+E0/ZETNyISdD07O1IJU2zLLwMwSia4CrorZKsL1ULavJAu8A104EafFBNr16TgZez0feh4NQ=="],
 
     "typescript": ["typescript@5.7.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw=="],
   }
