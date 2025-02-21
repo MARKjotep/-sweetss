@@ -287,5 +287,465 @@ declare const teal: {
     900: (alpha?: VarType | number) => sweetss.media;
     950: (alpha?: VarType | number) => sweetss.media;
 };
+declare const _blue: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _green: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _red: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _yellow: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _orange: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _purple: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _gray: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _indigo: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _pink: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
+declare const _teal: {
+    50: {
+        l: string;
+        d: string;
+    };
+    100: {
+        l: string;
+        d: string;
+    };
+    200: {
+        l: string;
+        d: string;
+    };
+    300: {
+        l: string;
+        d: string;
+    };
+    400: {
+        l: string;
+        d: string;
+    };
+    500: {
+        l: string;
+        d: string;
+    };
+    600: {
+        l: string;
+        d: string;
+    };
+    700: {
+        l: string;
+        d: string;
+    };
+    800: {
+        l: string;
+        d: string;
+    };
+    900: {
+        l: string;
+        d: string;
+    };
+    950: {
+        l: string;
+        d: string;
+    };
+};
 
-export { autoColor, black, blue, current, gray, green, indigo, names, orange, pink, purple, red, teal, transparent, white, yellow };
+export { _blue, _gray, _green, _indigo, _orange, _pink, _purple, _red, _teal, _yellow, autoColor, black, blue, current, gray, green, indigo, names, orange, pink, purple, red, teal, transparent, white, yellow };
