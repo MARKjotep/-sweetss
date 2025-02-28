@@ -1,6 +1,6 @@
 {
   "name": "@sweetss/qt",
-  "version": "0.0.23",
+  "version": "0.0.25",
   "description": "SweetSS utility",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "url": "https://github.com/MARKjotep/-sweetss/issues"
   },
   "homepage": "https://github.com/MARKjotep/-sweetss#readme",
-  "dependencies": {
+  "devDependencies": {
     "sweetss": "latest"
   },
   "publishConfig": {

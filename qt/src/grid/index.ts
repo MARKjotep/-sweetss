@@ -66,7 +66,7 @@ class SPACE<T extends PROXY<T>> extends JUST<T> {
   get SELF() {
     const nm = reCamel(this.data.aljust).split("-")[0];
 
-    return new STRECHED({
+    return new STRECHED<T>({
       values: this._value,
       data: {
         aljust: `${nm}Self`,
@@ -314,7 +314,7 @@ export class GRID extends GAP {
     }
   }
   get ALIGN() {
-    return new SPACE({
+    return new SPACE<GRID>({
       values: this._value,
       data: {
         aljust: "alignContent",
@@ -323,7 +323,7 @@ export class GRID extends GAP {
     });
   }
   get JUSTIFY() {
-    return new SPACE({
+    return new SPACE<GRID>({
       values: this._value,
     });
   }
@@ -338,7 +338,7 @@ export class GRID extends GAP {
     });
   }
   get SELF() {
-    return new STRECHED({
+    return new STRECHED<GRID>({
       values: this._value,
       data: {
         aljust: "placeSelf",

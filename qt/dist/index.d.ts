@@ -1463,7 +1463,7 @@ declare class SPACE<T extends PROXY<T>> extends JUST<T> {
     get around(): this;
     get between(): this;
     get even(): this;
-    get SELF(): STRECHED<PROXY<unknown, Record<string, any>>>;
+    get SELF(): STRECHED<T>;
 }
 declare class STRECHED<T extends PROXY<T>> extends JUST<T> {
     get stretch(): this;
@@ -1535,11 +1535,11 @@ declare class GRID extends GAP {
         data?: {} | undefined;
         values?: {} | undefined;
     });
-    get ALIGN(): SPACE<PROXY<unknown, Record<string, any>>>;
-    get JUSTIFY(): SPACE<PROXY<unknown, Record<string, any>>>;
+    get ALIGN(): SPACE<GRID>;
+    get JUSTIFY(): SPACE<GRID>;
     get TEMPLATE(): TEMP;
     get AUTO(): AUTO;
-    get SELF(): STRECHED<PROXY<unknown, Record<string, any>>>;
+    get SELF(): STRECHED<GRID>;
     grid(val: any): this;
     template(val1: any, val2?: any): this;
     area(area: string | areacfg): this;
