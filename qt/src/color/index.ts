@@ -1,5 +1,6 @@
 import { $$, media, Medyas, f, med } from "sweetss";
 import { PROXY } from "../proxy";
+import { isArr } from "../@";
 
 //
 
@@ -142,7 +143,7 @@ const _clr: Record<string, [string, string]> = {
   yellowgreen: ["#9ACD32", "#556B2F"],
 };
 
-class CLIST extends PROXY<CLIST, { prop: string }> {
+class CLIST<T extends PROXY<T>> extends PROXY<T, { prop: string }> {
   protected prop = "";
   //
   declare aliceblue: this;
@@ -286,7 +287,7 @@ const AutoRANDOM = (rev: boolean = false) => {
   return med(CLR[0], { dark: CLR[1] });
 };
 
-export class AUTODARK extends CLIST {
+export class AUTODARK extends CLIST<AUTODARK> {
   //
   protected valFN = (p: string) => {
     const CLR = _clr[String(p)];
@@ -300,7 +301,7 @@ export class AUTODARK extends CLIST {
   }
 }
 
-export class AUTOLIGHT extends CLIST {
+export class AUTOLIGHT extends CLIST<AUTOLIGHT> {
   //
   protected valFN = (p: string) => {
     const CLR = _clr[String(p)];
@@ -315,7 +316,7 @@ export class AUTOLIGHT extends CLIST {
   }
 }
 
-export class COLOR extends CLIST {
+export class COLOR extends CLIST<COLOR> {
   //
   protected valFN = (p: string) => {
     return _clr[p][0];
@@ -362,5 +363,93 @@ export class COLOR extends CLIST {
       values: this._value,
       data: { prop: this.data.prop },
     });
+  }
+  get MIX() {
+    return new MIX({
+      values: this._value,
+      data: { prop: this.data.prop },
+    });
+  }
+}
+
+const inMix = (
+  prop: string,
+  inter: string,
+  color1: any | [any, any],
+  color2: any | [any, any],
+) => {
+  return {
+    [prop]: f.colorMix(
+      `in ${inter}`,
+      isArr(color1) ? color1 : [color1],
+      isArr(color2) ? color2 : [color2],
+    ),
+  };
+};
+
+export class MIX extends CLIST<MIX> {
+  srgb(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "srgb", color1, color2);
+    return this;
+  }
+  srgb_linear(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "srgb-linear", color1, color2);
+    return this;
+  }
+  display_p3(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "display-p3", color1, color2);
+    return this;
+  }
+  a98_rgb(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "a98-rgb", color1, color2);
+    return this;
+  }
+  prophoto_rgb(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "prophoto-rgb", color1, color2);
+    return this;
+  }
+  rec2020(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "rec2020", color1, color2);
+    return this;
+  }
+  lab(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "lab", color1, color2);
+    return this;
+  }
+  oklab(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "oklab", color1, color2);
+    return this;
+  }
+  xyz(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "xyz", color1, color2);
+    return this;
+  }
+  xyz_d50(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "xyz-d50", color1, color2);
+    return this;
+  }
+  xyz_d65(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "xyz-d65", color1, color2);
+    return this;
+  }
+  hsl(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "hsl", color1, color2);
+    return this;
+  }
+  hwb(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "hwb", color1, color2);
+    return this;
+  }
+  lch(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "lch", color1, color2);
+    return this;
+  }
+  and(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "and", color1, color2);
+    return this;
+  }
+  oklch(color1: any | [any, any], color2: any | [any, any]) {
+    this._value = inMix(this.prop, "oklch", color1, color2);
+    return this;
   }
 }

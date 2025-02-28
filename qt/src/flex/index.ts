@@ -1,32 +1,33 @@
 import { media, Medyas } from "sweetss";
+import { isNum, PROXY } from "../proxy";
 
-class SCB {
+class SCB<T extends PROXY<T>> {
   constructor(
-    protected TH: Flex,
+    protected TH: T,
     protected prop: string,
     protected startEnd: [string, string] = ["flex-start", "flex-end"],
     protected _none: string = "flex-start",
     protected _auto: string = "auto",
   ) {}
-  get start(): Flex {
+  get start(): T {
     this.TH._value = {
       [this.prop]: this.startEnd[0],
     };
     return this.TH;
   }
-  get center(): Flex {
+  get center(): T {
     this.TH._value = {
       [this.prop]: "center",
     };
     return this.TH;
   }
-  get end(): Flex {
+  get end(): T {
     this.TH._value = {
       [this.prop]: this.startEnd[1],
     };
     return this.TH;
   }
-  get none(): Flex {
+  get none(): T {
     this.TH._value = {
       [this.prop]: this._none,
     };
@@ -34,20 +35,20 @@ class SCB {
   }
 }
 
-class SPACE extends SCB {
-  get around(): Flex {
+class SPACE<T extends PROXY<T>> extends SCB<T> {
+  get around(): T {
     this.TH._value = {
       [this.prop]: "space-around",
     };
     return this.TH;
   }
-  get between(): Flex {
+  get between(): T {
     this.TH._value = {
       [this.prop]: "space-between",
     };
     return this.TH;
   }
-  get even(): Flex {
+  get even(): T {
     this.TH._value = {
       [this.prop]: "space-evenly",
     };
@@ -55,20 +56,20 @@ class SPACE extends SCB {
   }
 }
 
-class STRECHED extends SCB {
-  get stretch(): Flex {
+class STRECHED<T extends PROXY<T>> extends SCB<T> {
+  get stretch(): T {
     this.TH._value = {
       [this.prop]: "stretch",
     };
     return this.TH;
   }
-  get baseline(): Flex {
+  get baseline(): T {
     this.TH._value = {
       [this.prop]: "baseline",
     };
     return this.TH;
   }
-  get auto(): Flex {
+  get auto(): T {
     this.TH._value = {
       [this.prop]: this._auto,
     };
@@ -77,8 +78,8 @@ class STRECHED extends SCB {
 }
 
 //
-const startEnd = (
-  TH: Flex,
+export const startEnd = <T extends PROXY<T>>(
+  TH: T,
   value: string,
   prop = "justifyContent",
   sce: [string, string] = ["flex-start", "flex-end"],
@@ -115,7 +116,26 @@ const toGAP = (TH: GAP, value: number, gap: string = "gap") => {
   return TH as Flex;
 };
 
-class GAP extends Medyas<Flex, { direction: string; reversed: boolean }> {
+export class _GAPN extends PROXY<_GAPN> {
+  protected prop: string = "gap";
+  //
+  [k: number]: this;
+  declare 0: this;
+  declare 1: this;
+  declare 2: this;
+  declare 3: this;
+  declare 4: this;
+  declare 5: this;
+  declare 6: this;
+  declare 7: this;
+  declare 8: this;
+  declare 9: this;
+  declare 10: this;
+
+  protected valFN = isNum;
+}
+
+class GAP extends PROXY<Flex, { direction: string; reversed: boolean }> {
   constructor({
     prefix = "",
     data = {
@@ -125,11 +145,6 @@ class GAP extends Medyas<Flex, { direction: string; reversed: boolean }> {
     values = {},
   } = {}) {
     super({ prefix, data, values });
-    if (!prefix) {
-      this._value = {
-        display: "flex",
-      };
-    }
   }
   gap(gap: number) {
     return toGAP(this, gap);
@@ -158,6 +173,91 @@ class GAP extends Medyas<Flex, { direction: string; reversed: boolean }> {
   colGap(gap: number) {
     return toGAP(this, gap, "rowGap");
   }
+  get GAP() {
+    return new _GAPN({
+      values: this._value,
+    });
+  }
+}
+
+class ALIGN extends PROXY<ALIGN, {}> {
+  protected prop: string = "alignItems";
+  get baseline() {
+    this._value = {
+      [this.prop]: "baseline",
+    };
+    return this;
+  }
+  get stretch() {
+    this._value = {
+      [this.prop]: "stretch",
+    };
+    return this;
+  }
+  get center() {
+    this._value = {
+      [this.prop]: "center",
+    };
+    return this;
+  }
+  get start() {
+    this._value = {
+      [this.prop]: "flex-start",
+    };
+    return this;
+  }
+  get end() {
+    this._value = {
+      [this.prop]: "flex-end",
+    };
+    return this;
+  }
+}
+
+export class JUST extends PROXY<JUST, {}> {
+  protected prop: string = "justifyContent";
+  get start() {
+    this._value = {
+      [this.prop]: "flex-start",
+    };
+    return this;
+  }
+  get center() {
+    this._value = {
+      [this.prop]: "center",
+    };
+    return this;
+  }
+  get end() {
+    this._value = {
+      [this.prop]: "flex-end",
+    };
+    return this;
+  }
+  get none() {
+    this._value = {
+      [this.prop]: "none",
+    };
+    return this;
+  }
+  get around() {
+    this._value = {
+      [this.prop]: "space-around",
+    };
+    return this;
+  }
+  get between() {
+    this._value = {
+      [this.prop]: "space-between",
+    };
+    return this;
+  }
+  get even() {
+    this._value = {
+      [this.prop]: "space-evenly",
+    };
+    return this;
+  }
 }
 
 export class Flex extends GAP {
@@ -170,21 +270,36 @@ export class Flex extends GAP {
     values = {},
   } = {}) {
     super({ prefix, data, values });
+    if (!prefix) {
+      this._value = {
+        display: "flex",
+      };
+    }
+  }
+  get ALIGN() {
+    return new ALIGN({
+      values: this._value,
+    });
+  }
+  get JUSTIFY() {
+    return new JUST({
+      values: this._value,
+    });
   }
   get BASELINE() {
-    return startEnd(this, "baseline");
+    return startEnd<Flex>(this, "baseline");
   }
   get STRETCH() {
-    return startEnd(this, "stretch");
+    return startEnd<Flex>(this, "stretch");
   }
   get CENTER() {
-    return startEnd(this, "center");
+    return startEnd<Flex>(this, "center");
   }
   get START() {
-    return startEnd(this, "flex-start");
+    return startEnd<Flex>(this, "flex-start");
   }
   get END() {
-    return startEnd(this, "flex-end");
+    return startEnd<Flex>(this, "flex-end");
   }
   //
   get column() {
@@ -220,6 +335,7 @@ export class Flex extends GAP {
     };
     return this;
   }
+
   //
   get wrap() {
     this._value = {
@@ -243,7 +359,7 @@ export class Flex extends GAP {
   get WRAPPED() {
     return new SPACE(
       //
-      this,
+      this as Flex,
       "alignContent",
       ["flex-start", "flex-end"],
       "stretch",
@@ -252,7 +368,7 @@ export class Flex extends GAP {
   get SELF() {
     return new STRECHED(
       //
-      this,
+      this as Flex,
       "alignSelf",
       ["flex-start", "flex-end"],
       "auto",

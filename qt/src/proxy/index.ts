@@ -1,4 +1,4 @@
-import { $$, Medyas } from "sweetss";
+import { $$, Medyas, f } from "sweetss";
 
 export const isNum = (val: any) => {
   let nv = Number(val);
@@ -16,6 +16,8 @@ export class PROXY<T extends Medyas<T>, Q = Record<string, any>> extends Medyas<
   protected propFN?: (p: string) => string;
   protected valFN?: (val: any) => any;
   protected string: boolean = true;
+  protected replacer: string = "-";
+
   constructor({ prefix = "", data = {}, values = {} } = {}) {
     super({ prefix, data, values });
 
@@ -29,11 +31,10 @@ export class PROXY<T extends Medyas<T>, Q = Record<string, any>> extends Medyas<
           if (target.propFN) {
             prop = target.propFN(p);
           }
-
           //
           let val = p;
           if (target.string) {
-            val = p.replaceAll("_", "-");
+            val = p.replaceAll("_", target.replacer);
           }
 
           if (target.valFN) {
@@ -55,6 +56,19 @@ export class PROXY<T extends Medyas<T>, Q = Record<string, any>> extends Medyas<
         return false;
       },
     });
+  }
+
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    if (this.prop) {
+      this._value = {
+        [this.prop]: f.var(val, optional),
+      };
+    }
+    return this;
   }
 }
 

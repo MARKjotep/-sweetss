@@ -1,6 +1,6 @@
 {
   "name": "@sweetss/colors",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "sweetss color pairs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/MARKjotep/-sweetss#readme",
   "dependencies": {
-    "sweetss": "^2.2.6"
+    "sweetss": "latest"
   },
   "publishConfig": {
     "access": "public"

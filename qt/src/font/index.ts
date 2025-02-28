@@ -1,4 +1,4 @@
-import { $$ } from "sweetss";
+import { $$, f } from "sweetss";
 import { isNum, PROXY } from "../proxy";
 
 export class SIZE extends PROXY<SIZE> {
@@ -47,11 +47,32 @@ export class SIZE extends PROXY<SIZE> {
     };
     return this;
   }
+
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      [this.prop]: f.var(val, optional),
+    };
+    return this;
+  }
 }
 export class FONTY extends PROXY<FONTY, {}> {
   font(font: any) {
     this._value = {
       font: font,
+    };
+    return this;
+  }
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      font: f.var(val, optional),
     };
     return this;
   }

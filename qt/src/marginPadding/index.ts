@@ -23,7 +23,7 @@ export class MP extends PROXY<MP, { mp: string; side: string }> {
 
   get auto() {
     this._value = {
-      [this.prop]: "auto",
+      [this.propFN()]: "auto",
     };
     return this;
   }
@@ -34,7 +34,7 @@ export class MP extends PROXY<MP, { mp: string; side: string }> {
    */
   px(val: number) {
     this._value = {
-      [this.prop]: `${val}px`,
+      [this.propFN()]: `${val}px`,
     };
     return this;
   }
@@ -44,7 +44,25 @@ export class MP extends PROXY<MP, { mp: string; side: string }> {
    */
   rm(val: number) {
     this._value = {
-      [this.prop]: val,
+      [this.propFN()]: val,
+    };
+    return this;
+  }
+
+  value(val: any) {
+    this._value = {
+      [this.propFN()]: val,
+    };
+    return this;
+  }
+
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      [this.propFN()]: f.var(val, optional),
     };
     return this;
   }

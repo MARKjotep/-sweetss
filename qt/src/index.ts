@@ -1,4 +1,4 @@
-import { $$, CSS, CSSProps, KFCSS } from "sweetss";
+import { $$, CSS, CSSProps, f } from "sweetss";
 import { Flex } from "./flex";
 import { WH } from "./widthHeight";
 import { INLINEBLOCK, MP } from "./marginPadding";
@@ -24,12 +24,14 @@ import { COLOR } from "./color";
 import { TEXT } from "./text";
 import { OUTLINE } from "./outline";
 import { COLUMN } from "./column";
-import { TRANSFORM, TRANSX } from "./transform";
+import { PERSPECTIVE, TRANSFORM, TRANSX } from "./transform";
 import { WORD } from "./word";
 import { LIST } from "./list";
 import { FONTY } from "./font";
 import { BOX, SHADOW } from "./box";
 import { SCROLL } from "./scroll";
+import { reCamel } from "./@";
+import { GRID } from "./grid";
 
 /*
 -------------------------
@@ -37,7 +39,51 @@ import { SCROLL } from "./scroll";
 -------------------------
 */
 
+export { $$ } from "./@";
+
+class VAR {
+  [k: string]: any;
+  VARS(vars: Record<string, any>) {
+    return Object.entries(vars).reduce<Record<string, any>>((a, [k, v]) => {
+      a[`--${reCamel(k)}`] = v;
+      return a;
+    }, {});
+  }
+  get VAR() {
+    return new Proxy(this, {
+      get(target, p: string, receiver) {
+        const TP = target[p as any];
+        if (TP) {
+          return TP;
+        }
+        return f.var(p);
+      },
+    });
+  }
+  optVAR(option: any) {
+    return new Proxy(this, {
+      get(target, p: string, receiver) {
+        const TP = target[p as any];
+        if (TP) {
+          return TP;
+        }
+        return f.var(p, option);
+      },
+    });
+  }
+}
+
 class MISC {
+  static VARS(vars: Record<string, any>) {
+    return new VAR().VARS(vars);
+  }
+  static optVAR(option: any) {
+    return new VAR().optVAR(option);
+  }
+  static get VAR() {
+    return new VAR().VAR;
+  }
+
   static get visible() {
     return new VISIBLE().visible;
   }
@@ -48,6 +94,12 @@ class MISC {
     return new SELECT().select;
   }
   static get noSelect() {
+    return new SELECT().none;
+  }
+  static get pointer() {
+    return new SELECT().select;
+  }
+  static get noPointer() {
     return new SELECT().none;
   }
 }
@@ -125,6 +177,9 @@ export class $ extends APPEARANCE {
   static get FLEX() {
     return new Flex();
   }
+  static get GRID() {
+    return new GRID();
+  }
   static get WIDTH() {
     return new WH({ data: { wh: "width", first: "" } });
   }
@@ -191,6 +246,10 @@ export class $ extends APPEARANCE {
   }
   static get TRANSFORM() {
     return new TRANSFORM();
+  }
+
+  static get PERSPECTIVE() {
+    return new PERSPECTIVE();
   }
   static transform(tran: TRANSX) {
     return new TRANSFORM().transform(tran);

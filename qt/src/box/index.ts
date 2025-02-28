@@ -1,5 +1,5 @@
 import { PROXY } from "../proxy";
-import { $$, join, value } from "sweetss";
+import { $$, f, join, value } from "sweetss";
 
 export interface shadowCFG {
   x: any;
@@ -37,6 +37,17 @@ export class SHADOW extends PROXY<SHADOW, {}> {
     //
     this._value = {
       boxShadow: "none",
+    };
+    return this;
+  }
+
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      boxShadow: f.var(val, optional),
     };
     return this;
   }

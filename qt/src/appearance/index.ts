@@ -282,6 +282,24 @@ export class SELECT extends PROXY<SELECT> {
   }
 }
 
+export class POINTER extends PROXY<POINTER> {
+  //
+  get auto() {
+    //
+    this._value = {
+      pointerEvents: "auto",
+    };
+    return this;
+  }
+  get none() {
+    //
+    this._value = {
+      pointerEvents: "none",
+    };
+    return this;
+  }
+}
+
 export class LINEHEIGHT extends PROXY<LINEHEIGHT> {
   protected prop: string = "lineHeight";
   //
@@ -389,6 +407,16 @@ export class OVERSCROLL extends PROXY<OVERSCROLL, {}> {
   get BLOCKNone() {
     this._value = {
       overscrollBehaviorBlock: "none",
+    };
+    return this;
+  }
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      overscrollBehavior: f.var(val, optional),
     };
     return this;
   }

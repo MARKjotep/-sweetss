@@ -13,6 +13,7 @@ import {
   SpreadElement,
   CallExpression,
 } from "@babel/types";
+import { $$ } from "./@";
 
 export class SweetShaker {
   files: string[] = [];
@@ -28,67 +29,74 @@ export class SweetShaker {
     const files = await fg(src);
 
     for (const _f of files) {
-      const content = await file(_f).text();
-      const ast = babel.parse(content, {
-        sourceType: "module",
-        plugins: ["jsx", "typescript", "decorators"],
-      });
-      traverse(ast, {
-        AssignmentExpression: (path) => {
-          const PN = path.node.left;
-          if (PN.type === "MemberExpression") {
-            if (getName(PN.property) === "value") {
-              const STN = getName(PN.object);
-              if (STN) {
-                const BN = path.scope.getBinding(STN);
-                if (BN) {
-                  const init = getInit(BN.path.node);
-                  if (init && getName(init) === "State") {
-                    handleAssignmentExpression.call(this, path.node.right, STN);
+      if (_f.endsWith(".tsx")) {
+        const content = await file(_f).text();
+        const ast = babel.parse(content, {
+          sourceType: "module",
+          plugins: ["jsx", "typescript", "decorators"],
+        });
+
+        traverse(ast, {
+          AssignmentExpression: (path) => {
+            const PN = path.node.left;
+            if (PN.type === "MemberExpression") {
+              if (getName(PN.property) === "value") {
+                const STN = getName(PN.object);
+                if (STN) {
+                  const BN = path.scope.getBinding(STN);
+                  if (BN) {
+                    const init = getInit(BN.path.node);
+                    if (init && getName(init) === "State") {
+                      handleAssignmentExpression.call(
+                        this,
+                        path.node.right,
+                        STN,
+                      );
+                    }
                   }
                 }
               }
             }
-          }
-        },
-        CallExpression: (path) => {
-          const PN = path.node;
-          if (PN.type === "CallExpression") {
-            const args = PN.arguments;
-            const PC = PN.callee;
-            const GN = getName(PC);
-            if (GN && ["add", "remove", "toggle"].includes(GN)) {
-              if (PC.type === "MemberExpression") {
-                const GCN = getName(PC.object);
-                if (GCN) {
-                  const BN = path.scope.getBinding(GCN);
-                  if (BN) {
-                    const init = getInit(BN.path.node);
-                    if (init) {
-                      if (getName(init) === "$") {
-                        args.forEach((ar) => {
-                          handleExpression.call(this, ar, path);
-                        });
+          },
+          CallExpression: (path) => {
+            const PN = path.node;
+            if (PN.type === "CallExpression") {
+              const args = PN.arguments;
+              const PC = PN.callee;
+              const GN = getName(PC);
+              if (GN && ["add", "remove", "toggle"].includes(GN)) {
+                if (PC.type === "MemberExpression") {
+                  const GCN = getName(PC.object);
+                  if (GCN) {
+                    const BN = path.scope.getBinding(GCN);
+                    if (BN) {
+                      const init = getInit(BN.path.node);
+                      if (init) {
+                        if (getName(init) === "$") {
+                          args.forEach((ar) => {
+                            handleExpression.call(this, ar, path);
+                          });
+                        }
                       }
                     }
                   }
                 }
               }
             }
-          }
-        },
-        JSXAttribute: (path) => {
-          if (path.node.name.name === "class") {
-            const value = path.node.value;
-            if (value && value.type === "StringLiteral") {
-              handleExpression.call(this, value, path);
-            } else if (value && value.type === "JSXExpressionContainer") {
-              handleExpression.call(this, value.expression, path);
-            } else {
+          },
+          JSXAttribute: (path) => {
+            if (path.node.name.name === "class") {
+              const value = path.node.value;
+              if (value && value.type === "StringLiteral") {
+                handleExpression.call(this, value, path);
+              } else if (value && value.type === "JSXExpressionContainer") {
+                handleExpression.call(this, value.expression, path);
+              } else {
+              }
             }
-          }
-        },
-      });
+          },
+        });
+      }
     }
     return this;
   }
@@ -105,7 +113,7 @@ export class SweetShaker {
     await write(dir + "/" + name + ".json", JSN);
   }
   get shaker() {
-    return [...this.classes.values()];
+    return [...this.classes];
   }
 }
 
@@ -161,6 +169,7 @@ async function handleExpression(
       break;
     case "MemberExpression":
       //
+
       if (node.property.type === "Identifier") {
         this.classes.add(node.property.name);
       }
@@ -171,15 +180,26 @@ async function handleExpression(
       break;
     case "Identifier":
       const bindr = path.scope.getBinding(node.name);
-      if (bindr && bindr.path.node.type === "VariableDeclarator") {
-        const SG = this.StateValues.get(node.name);
-        if (SG) {
-          SG.forEach((value) =>
-            value.split(/\s+/).forEach((cls) => this.classes.add(cls)),
-          );
+      if (bindr) {
+        const TYPE = bindr.path.node.type;
+        if (TYPE === "VariableDeclarator") {
+          const SG = this.StateValues.get(node.name);
+          if (SG) {
+            SG.forEach((value) =>
+              value.split(/\s+/).forEach((cls) => this.classes.add(cls)),
+            );
+          }
+          await resolveIdentifier.call(this, bindr.path.node, path as any);
+        } else if (TYPE === "ImportSpecifier") {
+          const Imported = bindr.path.node.imported;
+          switch (Imported.type) {
+            case "Identifier":
+              this.classes.add(Imported.name);
+              break;
+          }
         }
-        await resolveIdentifier.call(this, bindr.path.node, path as any);
       }
+
       break;
     default:
       break;

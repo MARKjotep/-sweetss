@@ -1,3 +1,4 @@
+import { f } from "sweetss";
 import { MP } from "../marginPadding";
 import { PROXY } from "../proxy";
 
@@ -29,6 +30,16 @@ export class SCROLL extends PROXY<SCROLL, {}> {
   get smooth() {
     this._value = {
       scrollBehavior: "smooth",
+    };
+    return this;
+  }
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      scrollBehavior: f.var(val, optional),
     };
     return this;
   }

@@ -80,4 +80,24 @@ export class WH extends PROXY<WH, { wh: string; first: string }> {
     };
     return this;
   }
+  /**
+   * value
+   * @param val number
+   */
+  value(val: any) {
+    this._value = {
+      [this.data.wh]: val,
+    };
+    return this;
+  }
+  /**
+   * variable
+   * @param val string
+   */
+  var(val: string, optional?: any) {
+    this._value = {
+      [this.data.wh]: f.var(val, optional),
+    };
+    return this;
+  }
 }

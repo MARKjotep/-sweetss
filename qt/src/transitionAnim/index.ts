@@ -10,10 +10,12 @@ const props: Record<string, string[]> = {
   opacity: ["opacity"],
   shadow: ["box-shadow"],
   transform: ["transform"],
+  dimension: ["height", "width", "margin", "padding"],
 };
 
 export class PROP extends PROXY<PROP, {}> {
   protected prop: string = "transitionProperty";
+  protected properties: Set<string> = new Set();
   //
   declare none: this;
   declare all: this;
@@ -25,8 +27,22 @@ export class PROP extends PROXY<PROP, {}> {
   declare transform: this;
 
   protected valFN = (val: string) => {
-    return props[val];
+    const vals = props[val];
+    //
+    vals.forEach((v) => {
+      this.properties.add(v);
+    });
+    return [...this.properties];
   };
+  property(...val: any[]) {
+    val.forEach((v) => {
+      this.properties.add(v);
+    });
+    this._value = {
+      transitionProperty: [...this.properties],
+    };
+    return this;
+  }
 }
 
 //
@@ -45,7 +61,7 @@ export class TIMING extends PROXY<TIMING, { prop: string }> {
   };
   cubicBezier(x1: any, y1: any, x2: any, y2: any) {
     this._value = {
-      [this.prop]: f.cubicBezier(x1, y1, x2, y2),
+      [this.propFN()]: f.cubicBezier(x1, y1, x2, y2),
     };
     return this;
   }
@@ -61,7 +77,7 @@ export class TIMING extends PROXY<TIMING, { prop: string }> {
       | "jump-both",
   ) {
     this._value = {
-      [this.prop]: f.steps(n, position),
+      [this.propFN()]: f.steps(n, position),
     };
 
     return this;

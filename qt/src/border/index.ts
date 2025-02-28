@@ -1,5 +1,6 @@
 import { $$, media, Medyas, f } from "sweetss";
 import { COLOR, RANDOM } from "../color";
+import { isNum, PROXY } from "../proxy";
 
 /*
 -------------------------
@@ -137,38 +138,66 @@ export class BORDER extends Medyas<BORDER, { side: string }> {
   }
 }
 
-export class RADIUS extends Medyas<RADIUS, {}> {
-  constructor({ prefix = "", data = {}, values = {} } = {}) {
-    super({ prefix, data, values });
-  }
+function PROX<T extends PROXY<T>>(this: T, prop: string): T {
+  return new Proxy(this, {
+    get(target: T, p: string) {
+      const tm = Number(p);
+      if (tm) {
+        target._value = {
+          [prop]: tm,
+        };
+      }
+
+      return target;
+    },
+  });
+}
+
+export class RADIUS extends PROXY<RADIUS, {}> {
+  protected prop: string = "borderRadius";
+  //
+  [k: number]: this;
+  declare 0: this;
+  declare 1: this;
+  declare 2: this;
+  declare 3: this;
+  declare 4: this;
+  declare 5: this;
+  declare 6: this;
+  declare 7: this;
+  declare 8: this;
+  declare 9: this;
+  declare 10: this;
+  protected valFN = isNum;
+
   v(val: any | any[]) {
     this._value = {
       borderRadius: val,
     };
   }
-  tL(val: any) {
-    this._value = {
-      borderTopLeftRadius: val,
-    };
-    return this;
+  get tL() {
+    return PROX.call(
+      this as PROXY<RADIUS, {}>,
+      "borderTopLeftRadius",
+    ) as RADIUS;
   }
-  tR(val: any) {
-    this._value = {
-      borderTopRightRadius: val,
-    };
-    return this;
+  get tR() {
+    return PROX.call(
+      this as PROXY<RADIUS, {}>,
+      "borderTopRightRadius",
+    ) as RADIUS;
   }
-  bR(val: any) {
-    this._value = {
-      borderBottomRightRadius: val,
-    };
-    return this;
+  get bR() {
+    return PROX.call(
+      this as PROXY<RADIUS, {}>,
+      "borderBottomRightRadius",
+    ) as RADIUS;
   }
-  bL(val: any) {
-    this._value = {
-      borderBottomLeftRadius: val,
-    };
-    return this;
+  get bL() {
+    return PROX.call(
+      this as PROXY<RADIUS, {}>,
+      "borderBottomLeftRadius",
+    ) as RADIUS;
   }
   x(val: any) {
     this._value = {
@@ -211,6 +240,43 @@ export class RADIUS extends Medyas<RADIUS, {}> {
   get b2() {
     this._value = {
       borderRadius: 2,
+    };
+    return this;
+  }
+  /**
+   * Percent
+   * @param val number
+   */
+  pr(val: number) {
+    this._value = {
+      [this.prop]: `${val}%`,
+    };
+    return this;
+  }
+  /**
+   * Pixel
+   * @param val number
+   */
+  px(val: number) {
+    this._value = {
+      [this.prop]: `${val}px`,
+    };
+    return this;
+  }
+  /**
+   * Rem
+   * @param val number
+   */
+  rm(val: number) {
+    this._value = {
+      [this.prop]: val,
+    };
+    return this;
+  }
+
+  value(val: any) {
+    this._value = {
+      [this.prop]: val,
     };
     return this;
   }

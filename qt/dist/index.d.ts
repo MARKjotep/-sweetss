@@ -5,15 +5,22 @@ declare class PROXY<T extends Medyas<T>, Q = Record<string, any>> extends Medyas
     protected propFN?: (p: string) => string;
     protected valFN?: (val: any) => any;
     protected string: boolean;
+    protected replacer: string;
     constructor({ prefix, data, values }?: {
         prefix?: string | undefined;
         data?: {} | undefined;
         values?: {} | undefined;
     });
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 
 declare class PROP extends PROXY<PROP, {}> {
     protected prop: string;
+    protected properties: Set<string>;
     none: this;
     all: this;
     colors: this;
@@ -23,6 +30,7 @@ declare class PROP extends PROXY<PROP, {}> {
     shadow: this;
     transform: this;
     protected valFN: (val: string) => string[];
+    property(...val: any[]): this;
 }
 declare class TIMING extends PROXY<TIMING, {
     prop: string;
@@ -133,29 +141,45 @@ declare class ANIMATION extends TRANS_ANIM {
     get ITERATION(): ITER;
 }
 
-declare class SCB {
-    protected TH: Flex;
+declare class SCB<T extends PROXY<T>> {
+    protected TH: T;
     protected prop: string;
     protected startEnd: [string, string];
     protected _none: string;
     protected _auto: string;
-    constructor(TH: Flex, prop: string, startEnd?: [string, string], _none?: string, _auto?: string);
-    get start(): Flex;
-    get center(): Flex;
-    get end(): Flex;
-    get none(): Flex;
+    constructor(TH: T, prop: string, startEnd?: [string, string], _none?: string, _auto?: string);
+    get start(): T;
+    get center(): T;
+    get end(): T;
+    get none(): T;
 }
-declare class SPACE extends SCB {
-    get around(): Flex;
-    get between(): Flex;
-    get even(): Flex;
+declare class SPACE$1<T extends PROXY<T>> extends SCB<T> {
+    get around(): T;
+    get between(): T;
+    get even(): T;
 }
-declare class STRECHED extends SCB {
-    get stretch(): Flex;
-    get baseline(): Flex;
-    get auto(): Flex;
+declare class STRECHED$1<T extends PROXY<T>> extends SCB<T> {
+    get stretch(): T;
+    get baseline(): T;
+    get auto(): T;
 }
-declare class GAP extends Medyas<Flex, {
+declare class _GAPN$1 extends PROXY<_GAPN$1> {
+    protected prop: string;
+    [k: number]: this;
+    0: this;
+    1: this;
+    2: this;
+    3: this;
+    4: this;
+    5: this;
+    6: this;
+    7: this;
+    8: this;
+    9: this;
+    10: this;
+    protected valFN: (val: any) => any;
+}
+declare class GAP$1 extends PROXY<Flex, {
     direction: string;
     reversed: boolean;
 }> {
@@ -176,8 +200,27 @@ declare class GAP extends Medyas<Flex, {
     get gap5(): Flex;
     rowGap(gap: number): Flex;
     colGap(gap: number): Flex;
+    get GAP(): _GAPN$1;
 }
-declare class Flex extends GAP {
+declare class ALIGN$1 extends PROXY<ALIGN$1, {}> {
+    protected prop: string;
+    get baseline(): this;
+    get stretch(): this;
+    get center(): this;
+    get start(): this;
+    get end(): this;
+}
+declare class JUST$1 extends PROXY<JUST$1, {}> {
+    protected prop: string;
+    get start(): this;
+    get center(): this;
+    get end(): this;
+    get none(): this;
+    get around(): this;
+    get between(): this;
+    get even(): this;
+}
+declare class Flex extends GAP$1 {
     constructor({ prefix, data, values, }?: {
         prefix?: string | undefined;
         data?: {
@@ -186,11 +229,13 @@ declare class Flex extends GAP {
         } | undefined;
         values?: {} | undefined;
     });
-    get BASELINE(): SPACE;
-    get STRETCH(): SPACE;
-    get CENTER(): SPACE;
-    get START(): SPACE;
-    get END(): SPACE;
+    get ALIGN(): ALIGN$1;
+    get JUSTIFY(): JUST$1;
+    get BASELINE(): SPACE$1<Flex>;
+    get STRETCH(): SPACE$1<Flex>;
+    get CENTER(): SPACE$1<Flex>;
+    get START(): SPACE$1<Flex>;
+    get END(): SPACE$1<Flex>;
     get column(): this;
     get columnReverse(): this;
     get row(): this;
@@ -198,8 +243,8 @@ declare class Flex extends GAP {
     get wrap(): this;
     get noWrap(): this;
     get wrapReverse(): this;
-    get WRAPPED(): SPACE;
-    get SELF(): STRECHED;
+    get WRAPPED(): SPACE$1<Flex>;
+    get SELF(): STRECHED$1<Flex>;
     shrink(value?: number): this;
     grow(value?: number): this;
     basis(value?: number): this;
@@ -249,6 +294,16 @@ declare class WH extends PROXY<WH, {
      * @param val number
      */
     rm(val: number): this;
+    /**
+     * value
+     * @param val number
+     */
+    value(val: any): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 
 declare class MP extends PROXY<MP, {
@@ -280,6 +335,12 @@ declare class MP extends PROXY<MP, {
      * @param val number
      */
     rm(val: number): this;
+    value(val: any): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
     get TOP(): MP;
     get RIGHT(): MP;
     get LEFT(): MP;
@@ -332,7 +393,7 @@ declare class INLINEBLOCK extends PROXY<INLINEBLOCK, {
     get START(): INLINEBLOCK;
 }
 
-declare class CLIST extends PROXY<CLIST, {
+declare class CLIST<T extends PROXY<T>> extends PROXY<T, {
     prop: string;
 }> {
     protected prop: string;
@@ -469,15 +530,15 @@ declare class CLIST extends PROXY<CLIST, {
         values?: {} | undefined;
     });
 }
-declare class AUTODARK extends CLIST {
+declare class AUTODARK extends CLIST<AUTODARK> {
     protected valFN: (p: string) => media;
     get random(): this;
 }
-declare class AUTOLIGHT extends CLIST {
+declare class AUTOLIGHT extends CLIST<AUTOLIGHT> {
     protected valFN: (p: string) => media;
     get random(): this;
 }
-declare class COLOR extends CLIST {
+declare class COLOR extends CLIST<COLOR> {
     protected valFN: (p: string) => string;
     color(color: any): this;
     rgba(R: any, G: any, B: any, A?: any): this;
@@ -486,6 +547,25 @@ declare class COLOR extends CLIST {
     get current(): this;
     get AUTOLIGHT(): AUTOLIGHT;
     get AUTODARK(): AUTODARK;
+    get MIX(): MIX;
+}
+declare class MIX extends CLIST<MIX> {
+    srgb(color1: any | [any, any], color2: any | [any, any]): this;
+    srgb_linear(color1: any | [any, any], color2: any | [any, any]): this;
+    display_p3(color1: any | [any, any], color2: any | [any, any]): this;
+    a98_rgb(color1: any | [any, any], color2: any | [any, any]): this;
+    prophoto_rgb(color1: any | [any, any], color2: any | [any, any]): this;
+    rec2020(color1: any | [any, any], color2: any | [any, any]): this;
+    lab(color1: any | [any, any], color2: any | [any, any]): this;
+    oklab(color1: any | [any, any], color2: any | [any, any]): this;
+    xyz(color1: any | [any, any], color2: any | [any, any]): this;
+    xyz_d50(color1: any | [any, any], color2: any | [any, any]): this;
+    xyz_d65(color1: any | [any, any], color2: any | [any, any]): this;
+    hsl(color1: any | [any, any], color2: any | [any, any]): this;
+    hwb(color1: any | [any, any], color2: any | [any, any]): this;
+    lch(color1: any | [any, any], color2: any | [any, any]): this;
+    and(color1: any | [any, any], color2: any | [any, any]): this;
+    oklch(color1: any | [any, any], color2: any | [any, any]): this;
 }
 
 declare class BORDER extends Medyas<BORDER, {
@@ -520,17 +600,26 @@ declare class BORDER extends Medyas<BORDER, {
     get bRandom(): this;
     get COLOR(): COLOR;
 }
-declare class RADIUS extends Medyas<RADIUS, {}> {
-    constructor({ prefix, data, values }?: {
-        prefix?: string | undefined;
-        data?: {} | undefined;
-        values?: {} | undefined;
-    });
+declare class RADIUS extends PROXY<RADIUS, {}> {
+    protected prop: string;
+    [k: number]: this;
+    0: this;
+    1: this;
+    2: this;
+    3: this;
+    4: this;
+    5: this;
+    6: this;
+    7: this;
+    8: this;
+    9: this;
+    10: this;
+    protected valFN: (val: any) => any;
     v(val: any | any[]): void;
-    tL(val: any): this;
-    tR(val: any): this;
-    bR(val: any): this;
-    bL(val: any): this;
+    get tL(): RADIUS;
+    get tR(): RADIUS;
+    get bR(): RADIUS;
+    get bL(): RADIUS;
     x(val: any): this;
     y(val: any): this;
     get b0(): this;
@@ -538,6 +627,22 @@ declare class RADIUS extends Medyas<RADIUS, {}> {
     get b1(): this;
     get b1p5(): this;
     get b2(): this;
+    /**
+     * Percent
+     * @param val number
+     */
+    pr(val: number): this;
+    /**
+     * Pixel
+     * @param val number
+     */
+    px(val: number): this;
+    /**
+     * Rem
+     * @param val number
+     */
+    rm(val: number): this;
+    value(val: any): this;
 }
 
 declare class CURSOR extends PROXY<CURSOR, {}> {
@@ -603,7 +708,7 @@ declare class DISPLAY extends PROXY<DISPLAY> {
     table_row: this;
     none: this;
 }
-declare class POSITION extends PROXY<POSITION> {
+declare class POSITION$1 extends PROXY<POSITION$1> {
     protected prop: string;
     static: this;
     absolute: this;
@@ -748,6 +853,11 @@ declare class OVERSCROLL extends PROXY<OVERSCROLL, {}> {
     get BLOCKAuto(): this;
     get BLOCKContain(): this;
     get BLOCKNone(): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 
 declare class ATTACH extends PROXY<ATTACH, {}> {
@@ -776,6 +886,7 @@ declare class CLIPOR extends PROXY<CLIPOR, {
     padding_box: this;
     content_box: this;
     text: this;
+    protected valFN: (val: any) => any;
     constructor({ prefix, data, values }?: {
         prefix?: string | undefined;
         data?: {
@@ -784,12 +895,82 @@ declare class CLIPOR extends PROXY<CLIPOR, {
         values?: {} | undefined;
     });
 }
+declare class SIZE$1 extends PROXY<SIZE$1> {
+    protected prop: string;
+    [k: number]: this;
+    0: this;
+    1: this;
+    2: this;
+    3: this;
+    4: this;
+    5: this;
+    6: this;
+    7: this;
+    8: this;
+    9: this;
+    10: this;
+    protected valFN: (val: any) => any;
+    get auto(): this;
+    get cover(): this;
+    get contain(): this;
+    /**
+     * Pixel
+     * @param val number
+     */
+    px(val: number): this;
+    /**
+     * Rem
+     * @param val number
+     */
+    rm(val: number): this;
+    value(val: any): this;
+}
+declare class POSITION extends PROXY<POSITION> {
+    protected prop: string;
+    protected replacer: string;
+    center: this;
+    top: this;
+    bottom: this;
+    left: this;
+    right: this;
+    left_top: this;
+    left_center: this;
+    left_bottom: this;
+    right_top: this;
+    right_center: this;
+    right_bottom: this;
+    center_top: this;
+    center_center: this;
+    center_bottom: this;
+    value(val: any): this;
+    XY(x: any, y?: any): this;
+}
+declare class IMAGE extends PROXY<IMAGE, {}> {
+    protected prop: string;
+    url(url: string): this;
+    conic(...v: any[]): this;
+    repeatingConic(...v: any[]): this;
+    linear(...v: any[]): this;
+    repeatingLinear(...v: any[]): this;
+    radial(...v: any[]): this;
+    repeatingRadial(...v: any[]): this;
+    get none(): this;
+    value(val: any): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
+}
 declare class BACKGROUND {
     get ATTACH(): ATTACH;
     get BLEND(): BLEND;
     get CLIP(): CLIPOR;
-    get ORIG(): CLIPOR;
+    get ORIGIN(): CLIPOR;
     get COLOR(): COLOR;
+    get SIZE(): SIZE$1;
+    get IMAGE(): IMAGE;
+    get POSITION(): POSITION;
     color(color: any): COLOR;
 }
 
@@ -1040,17 +1221,36 @@ interface TRANSX<T = CSSValue> {
     skewY?: T;
     perspective?: T;
 }
-declare class TRANSFORM extends Medyas<TRANSFORM, {}> {
-    constructor({ prefix, data, values }?: {
-        prefix?: string | undefined;
-        data?: {} | undefined;
-        values?: {} | undefined;
-    });
-    origin(...origin: [string, string, string]): void;
+declare class TRANSFORM extends PROXY<TRANSFORM, {}> {
+    origin(...origin: [string, string?, string?]): this;
     get flat(): this;
     get preserve3d(): this;
     get none(): this;
     transform(tran: TRANSX): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
+}
+declare class PERSPECTIVE extends PROXY<PERSPECTIVE, {}> {
+    protected prop: string;
+    [k: number]: this;
+    0: this;
+    1: this;
+    2: this;
+    3: this;
+    4: this;
+    5: this;
+    6: this;
+    7: this;
+    8: this;
+    9: this;
+    10: this;
+    protected valFN: (val: any) => any;
+    get none(): this;
+    x(axis: any): this;
+    y(axis: any): this;
 }
 
 declare class WORD extends PROXY<WORD, {
@@ -1142,9 +1342,19 @@ declare class SIZE extends PROXY<SIZE> {
      * @param val number
      */
     rm(val: number): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 declare class FONTY extends PROXY<FONTY, {}> {
     font(font: any): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
     stretch(stretch: any): this;
     family(family: any): this;
     sizeAdjust(size: any): this;
@@ -1187,6 +1397,11 @@ declare class SHADOW extends PROXY<SHADOW, {}> {
     value(shadow: any): this;
     set(shadow: shadowCFG): this;
     get none(): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 declare class BOX extends PROXY<BOX, {}> {
     get slice(): this;
@@ -1201,6 +1416,11 @@ declare class SCROLL extends PROXY<SCROLL, {}> {
     get SNAP(): SNAP;
     get auto(): this;
     get smooth(): this;
+    /**
+     * variable
+     * @param val string
+     */
+    var(val: string, optional?: any): this;
 }
 declare class SNAP extends PROXY<SNAP, {}> {
     get normalStop(): this;
@@ -1221,11 +1441,137 @@ declare class SNAP extends PROXY<SNAP, {}> {
     type(stop: any): this;
 }
 
+declare class JUST<T extends PROXY<T>> extends PROXY<T, {
+    aljust: string;
+    _auto: string;
+}> {
+    protected prop: string;
+    constructor({ prefix, data, values, }?: {
+        prefix?: string | undefined;
+        data?: {
+            aljust: string;
+            _auto: string;
+        } | undefined;
+        values?: {} | undefined;
+    });
+    get start(): this;
+    get center(): this;
+    get end(): this;
+    get none(): this;
+}
+declare class SPACE<T extends PROXY<T>> extends JUST<T> {
+    get around(): this;
+    get between(): this;
+    get even(): this;
+    get SELF(): STRECHED<PROXY<unknown, Record<string, any>>>;
+}
+declare class STRECHED<T extends PROXY<T>> extends JUST<T> {
+    get stretch(): this;
+    get baseline(): this;
+    get auto(): this;
+}
+declare class TEMP extends PROXY<TEMP> {
+    protected prop: string;
+    get none(): this;
+    get noArea(): this;
+    get noColumns(): this;
+    get noRows(): this;
+    areas(...area: any[][]): this;
+    col(...cols: any[]): this;
+    row(...cols: any[]): this;
+}
+declare class AUTO extends PROXY<AUTO> {
+    protected prop: string;
+    col(...cols: any[]): this;
+    row(...cols: any[]): this;
+    get rowFlow(): this;
+    get colFlow(): this;
+    get dense(): this;
+    get rowDense(): this;
+    get colDense(): this;
+}
+interface areacfg {
+    rowS: any;
+    rowE: any;
+    colS: any;
+    colE: any;
+}
+declare class _GAPN extends PROXY<_GAPN> {
+    protected prop: string;
+    [k: number]: this;
+    0: this;
+    1: this;
+    2: this;
+    3: this;
+    4: this;
+    5: this;
+    6: this;
+    7: this;
+    8: this;
+    9: this;
+    10: this;
+    protected valFN: (val: any) => any;
+}
+declare class GAP extends PROXY<GRID> {
+    constructor({ prefix, data, values }?: {
+        prefix?: string | undefined;
+        data?: {} | undefined;
+        values?: {} | undefined;
+    });
+    gap(gap: number): GRID;
+    get gap0(): GRID;
+    get gap1(): GRID;
+    get gap2(): GRID;
+    get gap3(): GRID;
+    get gap4(): GRID;
+    get gap5(): GRID;
+    rowGap(gap: number): GRID;
+    colGap(gap: number): GRID;
+    get GAP(): _GAPN;
+}
+declare class GRID extends GAP {
+    constructor({ prefix, data, values }?: {
+        prefix?: string | undefined;
+        data?: {} | undefined;
+        values?: {} | undefined;
+    });
+    get ALIGN(): SPACE<PROXY<unknown, Record<string, any>>>;
+    get JUSTIFY(): SPACE<PROXY<unknown, Record<string, any>>>;
+    get TEMPLATE(): TEMP;
+    get AUTO(): AUTO;
+    get SELF(): STRECHED<PROXY<unknown, Record<string, any>>>;
+    grid(val: any): this;
+    template(val1: any, val2?: any): this;
+    area(area: string | areacfg): this;
+    col(start: any, end: any): this;
+    colStart(start: any): this;
+    colEnd(end: any): this;
+    row(start: any, end: any): this;
+    rowStart(start: any): this;
+    rowEnd(end: any): this;
+    get autoColumn(): this;
+}
+
+declare class $$ {
+    static set p(a: any);
+}
+
+declare class VAR {
+    [k: string]: any;
+    VARS(vars: Record<string, any>): Record<string, any>;
+    get VAR(): this;
+    optVAR(option: any): this;
+}
 declare class MISC {
+    static VARS(vars: Record<string, any>): Record<string, any>;
+    static optVAR(option: any): VAR;
+    static get VAR(): VAR;
     static get visible(): VISIBLE;
     static get hidden(): VISIBLE;
     static get select(): SELECT;
     static get noSelect(): SELECT;
+    static get pointer(): SELECT;
+    static get noPointer(): SELECT;
 }
 declare class _ANIMATION extends MISC {
     static get TRANSITION(): TRANSITION;
@@ -1241,7 +1587,7 @@ declare class APPEARANCE extends _ANIMATION {
     static get WORD(): WORD;
     static get CURSOR(): CURSOR;
     static get DISPLAY(): DISPLAY;
-    static get POSITION(): POSITION;
+    static get POSITION(): POSITION$1;
     static get RADIUS(): RADIUS;
     static get BORDER(): BORDER;
     static get OUTLINE(): OUTLINE;
@@ -1254,6 +1600,7 @@ declare class APPEARANCE extends _ANIMATION {
 }
 declare class $ extends APPEARANCE {
     static get FLEX(): Flex;
+    static get GRID(): GRID;
     static get WIDTH(): WH;
     static get HEIGHT(): WH;
     static get TOP(): WH;
@@ -1275,6 +1622,7 @@ declare class $ extends APPEARANCE {
     static get MARGIN(): MP;
     static get PADDING(): MP;
     static get TRANSFORM(): TRANSFORM;
+    static get PERSPECTIVE(): PERSPECTIVE;
     static transform(tran: TRANSX): TRANSFORM;
     static get LIST(): LIST;
     static get BOX(): BOX;
@@ -1283,4 +1631,4 @@ declare class $ extends APPEARANCE {
     static get OVERSCROLL(): OVERSCROLL;
 }
 
-export { $ };
+export { $, $$ };
