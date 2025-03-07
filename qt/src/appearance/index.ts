@@ -117,12 +117,14 @@ export class OVERFLOW extends Medyas<OVERFLOW, { xy: string }> {
   }
   get X() {
     return new OVERFLOW({
+      prefix: this._prefix,
       values: this["_values"],
       data: { xy: "X" },
     });
   }
   get Y() {
     return new OVERFLOW({
+      prefix: this._prefix,
       values: this["_values"],
       data: { xy: "Y" },
     });

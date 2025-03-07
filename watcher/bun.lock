@@ -1,0 +1,23 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "@sweetss/watcher",
+      "dependencies": {
+        "chokidar": "^4.0.3",
+      },
+      "devDependencies": {
+        "sweetss": "latest",
+      },
+    },
+  },
+  "packages": {
+    "chokidar": ["chokidar@4.0.3", "", { "dependencies": { "readdirp": "^4.0.1" } }, "sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA=="],
+
+    "readdirp": ["readdirp@4.1.2", "", {}, "sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg=="],
+
+    "sweetss": ["sweetss@2.4.15", "", { "peerDependencies": { "typescript": "^5.7.3" } }, "sha512-TGseF2Aa747HodqDzGfy+LGjs8aCC/OFJHxTsFHguOra1O2OgrPqdrx/LmLJLgdhBdWL9DM1m8fZe/c8ByRtww=="],
+
+    "typescript": ["typescript@5.8.2", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ=="],
+  }
+}

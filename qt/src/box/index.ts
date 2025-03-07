@@ -10,6 +10,13 @@ export interface shadowCFG {
   inset?: boolean;
 }
 
+export const getShadow = (s: shadowCFG) => {
+  const { x, y, blur, spread, color, inset } = s;
+  return value([x, y, blur, spread, color, inset ? "inset" : undefined], {
+    rem: true,
+  });
+};
+
 export class SHADOW extends PROXY<SHADOW, {}> {
   protected shadows = new Set<string>();
   value(shadow: any) {
@@ -22,11 +29,10 @@ export class SHADOW extends PROXY<SHADOW, {}> {
   }
   set(shadow: shadowCFG) {
     //
-    const { x, y, blur, spread, color, inset } = shadow;
-    const vv = value([x, y, blur, spread, color, inset ? "inset" : undefined], {
-      rem: true,
-    });
+
+    const vv = getShadow(shadow);
     this.shadows.add(vv);
+
     this._value = {
       boxShadow: [...this.shadows].join(", "),
     };

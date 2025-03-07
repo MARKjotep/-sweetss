@@ -1,7 +1,7 @@
 {
-  "name": "@sweetss/qt",
-  "version": "0.0.30",
-  "description": "SweetSS utility",
+  "name": "@sweetss/watcher",
+  "version": "0.0.1",
+  "description": "SweetSS file watcher",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,12 +12,13 @@
     "dirs": "for dir in ./src ./dist ./test ./util ./types; do mkdir -p $dir; done",
     "@": "ln -sf ../../../misc/@/ ./src",
     "ts": "ln -sf ../../misc/tsconfig.json ./;",
-    "init": "bun run dirs && bun run util && bun run @ && bun run ts;",
+    "init": "bun run dirs && bun run util && bun run @ && bun run ts && bun update;",
     "build": "rm -r ./types ; tsc && bun build ./src/index.ts --outdir ./dist --minify --packages external --target bun && rollup -c ./util/rollup.config.js"
   },
   "keywords": [
     "css",
-    "js"
+    "js",
+    "bun"
   ],
   "author": "MARKjotep",
   "license": "MIT",
@@ -30,6 +31,9 @@
     "url": "https://github.com/MARKjotep/-sweetss/issues"
   },
   "homepage": "https://github.com/MARKjotep/-sweetss#readme",
+  "dependencies": {
+    "chokidar": "latest"
+  },
   "devDependencies": {
     "sweetss": "latest"
   },

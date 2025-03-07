@@ -32,6 +32,7 @@ import { BOX, SHADOW } from "./box";
 import { SCROLL } from "./scroll";
 import { reCamel } from "./@";
 import { GRID } from "./grid";
+import { BACKFILTER, FILTER } from "./filter";
 
 /*
 -------------------------
@@ -129,6 +130,13 @@ class APPEARANCE extends _ANIMATION {
   static get FONT() {
     return new FONTY();
   }
+  static get FILTER() {
+    return new FILTER();
+  }
+  static get BACKDROP() {
+    return new BACKFILTER();
+  }
+
   static get VALIGN() {
     return new VERTICAL();
   }

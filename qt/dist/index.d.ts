@@ -547,9 +547,18 @@ declare class COLOR extends CLIST<COLOR> {
     get current(): this;
     get AUTOLIGHT(): AUTOLIGHT;
     get AUTODARK(): AUTODARK;
-    get MIX(): MIX;
+    get MIX(): MIX<PROXY<unknown, Record<string, any>>>;
 }
-declare class MIX extends CLIST<MIX> {
+declare class MIX<T extends PROXY<T>> extends PROXY<T, {
+    prop: string;
+}> {
+    constructor({ prefix, data, values }?: {
+        prefix?: string | undefined;
+        data?: {
+            prop: string;
+        } | undefined;
+        values?: {} | undefined;
+    });
     srgb(color1: any | [any, any], color2: any | [any, any]): this;
     srgb_linear(color1: any | [any, any], color2: any | [any, any]): this;
     display_p3(color1: any | [any, any], color2: any | [any, any]): this;
@@ -1552,6 +1561,31 @@ declare class GRID extends GAP {
     get autoColumn(): this;
 }
 
+interface filters {
+    dropShadow?: shadowCFG;
+    url?: string;
+    blur?: number;
+    hueRotate?: number;
+    brightness?: number;
+    contrast?: number;
+    grayscale?: number;
+    invert?: number;
+    opacity?: number;
+    saturate?: number;
+    sepia?: number;
+}
+declare class FILTER extends PROXY<FILTER, {}> {
+    protected filters: Set<string>;
+    protected prop: string;
+    get none(): this;
+    filter(filter?: filters): this;
+}
+declare class BACKFILTER extends PROXY<FILTER, {}> {
+    protected filters: Set<string>;
+    get none(): this;
+    filter(filter?: filters): this;
+}
+
 declare class $$ {
     static set p(a: any);
 }
@@ -1583,6 +1617,8 @@ declare class APPEARANCE extends _ANIMATION {
     static get COLOR(): COLOR;
     static get TEXT(): TEXT;
     static get FONT(): FONTY;
+    static get FILTER(): FILTER;
+    static get BACKDROP(): BACKFILTER;
     static get VALIGN(): VERTICAL;
     static get WORD(): WORD;
     static get CURSOR(): CURSOR;

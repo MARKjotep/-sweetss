@@ -147,7 +147,7 @@ export class TEMP extends PROXY<TEMP> {
   row(...cols: any[]) {
     //
     this._value = {
-      gridTemplateColumns: cols,
+      gridTemplateRows: cols,
     };
     return this;
   }

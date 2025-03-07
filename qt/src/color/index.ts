@@ -143,6 +143,16 @@ const _clr: Record<string, [string, string]> = {
   yellowgreen: ["#9ACD32", "#556B2F"],
 };
 
+function hexToRGBA(color: string, opacity: any) {
+  if (color === "transparent" || color === "currentColor") return color;
+  return f.rgba(
+    parseInt(color.slice(1, 3), 16),
+    parseInt(color.slice(3, 5), 16),
+    parseInt(color.slice(5, 7), 16),
+    opacity,
+  );
+}
+
 class CLIST<T extends PROXY<T>> extends PROXY<T, { prop: string }> {
   protected prop = "";
   //
@@ -387,7 +397,11 @@ const inMix = (
   };
 };
 
-export class MIX extends CLIST<MIX> {
+export class MIX<T extends PROXY<T>> extends PROXY<T, { prop: string }> {
+  constructor({ prefix = "", data = { prop: "" }, values = {} } = {}) {
+    super({ prefix, data, values });
+    this.prop = this.data.prop;
+  }
   srgb(color1: any | [any, any], color2: any | [any, any]) {
     this._value = inMix(this.prop, "srgb", color1, color2);
     return this;

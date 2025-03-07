@@ -1,5 +1,5 @@
 import { $$, $ } from "../src";
-import { med, media, CSSProps, value } from "sweetss";
+import { f, med, media, CSSProps, value } from "sweetss";
 import { PROXY } from "../src/proxy";
 
 // const basic = [
